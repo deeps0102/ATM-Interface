@@ -67,16 +67,4 @@ public class Transaction
 	public void setBal_aft(bal_aft){
 		this.bal_aft = bal_aft;
 	}
-
-	public void addAccTransac(){
-		//add an account Transaction
-	}
-
-	public void getAccTransHistory(){
-		//prints Transaction history
-	}
-
-	public void printAccTransHistory(){
-		//prints Transaction history
-	}
 } 
