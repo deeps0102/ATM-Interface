@@ -1,17 +1,18 @@
-public class Transaction extends Account
+public class Transaction
 {
-	private int Transac_id;
-	private string Transac_type;
+	private int transac_id;
+	private String transac_type;
 	private Date date_time;
 	private double bal_bef;
 	private double bal_aft;
+	private int cust_id = NULL;
+	private int acc_no = NULL;
 
-	public Transaction(int Customer_id, string c_name, string c_address, int c_phone_no, int Account_no, string Acc_type, double Acc_balance, int Transac_id, string Transac_type, Date date_time, double bal_bef, double bal_aft)
+	public Transaction(int transac_id, String transac_type, Date date_time, double bal_bef, double bal_aft)
 	{
 		//define the constructor
-		super(Customer_id, c_name, c_address, c_phone_no, Account_no, Acc_type, Acc_balance);
-		this.setTransac_id(Transac_id);
-		this.setTransac_type(Transac_type);
+		this.setTransac_id(transac_id);
+		this.setTransac_type(transac_type);
 		this.setDate_time(date_time);
 		this.setBal_bef(bal_bef);
 		this.setBal_aft(bal_aft);
@@ -19,22 +20,22 @@ public class Transaction extends Account
 
 	//returns id of the transaction
 	public int getTransac_id(){
-		return this.Transac_id;
+		return this.transac_id;
 	}
 
 	//sets the id of the transaction
-	public void setTransac_id(Transac_id){
-		this.Transac_id = Transac_id;
+	public void setTransac_id(transac_id){
+		this.transac_id = transac_id;
 	}
 
 	//returns type of the transaction
-	public string getTransac_type(){
-		return this.Transac_type;
+	public String getTransac_type(){
+		return this.transac_type;
 	}
 
 	//sets the type of the transaction
-	public void setTransac_type(Transac_type){
-		this.Transac_type = Transac_type;
+	public void setTransac_type(transac_type){
+		this.transac_type = transac_type;
 	}
 
 	//returns date and time of the transaction

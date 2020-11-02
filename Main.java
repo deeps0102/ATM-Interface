@@ -9,6 +9,7 @@ public class Main
 
 		Customer user;
 		Card card_user;
+		Account account_user;
 
 		boolean run = true;
 
@@ -61,7 +62,7 @@ public class Main
 					pin = input.nextInt();
 
 					//checking if PIN is correct
-					boolean check_pin = card_user.ValidPin(pin);
+					boolean check_pin = card_user.ValidPin(cardNo, pin);
 					if(check_pin){
 
 						// finding customer corresponding to provided ID, card number, and PIN 
@@ -88,25 +89,114 @@ public class Main
 	*/
 	public static void printCustomerMenu(Card card_user, Scanner input){
 		
+		//init
+		int choice;
+
+		//user menu
+		while(choice < 1 || choice > 5){
+
+			System.out.println("What would you like to do?\n\n");
+			System.out.println(" 1 - CHANGE PIN");
+			System.out.println(" 2 - SWOW ACCOUNT BALANCE");
+			System.out.println(" 3 - PERFORM TRANSACTION");
+			System.out.println(" 4 - SHOW ACCOUNT TRANSACTION HISTORY");
+			System.out.println(" 5 - QUIT\n\n");
+			System.out.println("ENTER CHOICE :: ");
+			choice = input.nextInt();
+
+			if(choice < 1 || choice > 5)
+				System.out.println("Invalid choice.\nPlease try again\n");
+		}
+
+		//processing the choice
+
+		switch(choice){
+
+
+		case 1 : 
+				Main.changePIN(card_user, input);
+				break;
+
+		case 2 :
+				Main.showBalance(card_user, input);
+				break;
+
+		case 3 :
+				Main.performTransac(card_user, input);
+				break;
+
+		case 4 :
+				Main.showTransacHistory(card_user, input);
+				break;
+
+		case 5 :
+				input.nextLine();
+				break;
+		}
+
+		//redisplay this menu unless the user wants to quit
+		if(choice!=5)
+			Main.printCustomerMenu(card_user, input);
 	}
 
-	public static void withdrawFunds(){
+	/*
+		changes the pin of a customer
+	*/
+	public static void changePIN(Card card_user, Scanner input){
+		int oldPin;
+		int newPin;
+
+		System.out.print("Enter old PIN :: ");
+		oldPin = input.nextInt();
+
+		// verifying the pin
+		boolean check_pin = card_user.ValidPin(card_user.card_no, oldPin);
+		if(check_pin){
+
+			//entering new PIN
+			System.out.print("Enter new PIN :: ");
+			newPin = input.nextInt();
+
+			int recheck_newPin;
+			System.out.print("Again enter new PIN :: ");
+			recheck_newPin = input.nextInt();
+
+			if(newPin==recheck_newPin){
+
+				updatePin(card_user.card_no, newPin);
+				System.out.print("PIN updated successfuly\n\n");
+			}
+			else
+				System.out.print("Re-entered New PIN doesn't match\nPlease Try Again\n\n");
+	
+		}
+		else
+			System.out.printf("\n\nIncorrect PIN\nPlease try again\n\n");
+	}
+
+	/*
+		display balance of customer account
+	*/
+	public static void showBalance(Card card_user, Scanner input){
+
+		double balance;
+		balance = account_user.showAccBalance(card_user.AccNo);
+
+		System.out.println("Your Account Balance is :: " + balance + "\n\n");
+
+	}
+
+	/*
+		displays tranaction history of an account
+	*/
+	public static void showTransacHistory(Card card_user, Scanner input){
+
+	}	
+
+	public static void performTransac(Card card_user, Scanner input){
 		//it processes the fund withdraw from an account
 	}
 
-	public static void depositFunds(){
-		//it processes the fund deposit to an account
-	}
+	
 
-	public static void transferFunds(){
-		//it processes transferring of funds from one account to another
-	}
-
-	public static void changePIN(){
-		//changes the pin of an customer
-	}
-
-	public static void showTransHistory(){
-		//shows the transaction history for an account
-	}
 }
