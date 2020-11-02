@@ -4,6 +4,8 @@ public class Card
 	private int exp_date;
 	private String card_type;
 	private int pin;
+	private int cust_id = NULL;
+	private int acc_no = NULL;
 
 	public card(int card_no, int exp_date, int pin)
 	{
