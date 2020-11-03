@@ -1,4 +1,8 @@
-import java.util.Scanner;
+import java.sql.*;
+import java.util.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.time.LocalDate;
 
 public class Main
 {
@@ -196,7 +200,4 @@ public class Main
 	public static void performTransac(Card card_user, Scanner input){
 		//it processes the fund withdraw from an account
 	}
-
-	
-
 }

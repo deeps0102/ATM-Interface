@@ -1,3 +1,9 @@
+import java.sql.*;
+import java.util.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.time.LocalDate;
+
 public class Transaction
 {
 	private int transac_id;
@@ -66,5 +72,10 @@ public class Transaction
 	//sets the balance after the transaction
 	public void setBal_aft(bal_aft){
 		this.bal_aft = bal_aft;
+	}
+	//show and prints transaction history with data from transactions table
+	public void show_transac_his()
+	{
+		//
 	}
 } 
