@@ -29,10 +29,10 @@ class Database {
             stmt.executeUpdate("create table cards(cd_no int primary key, cd_type varchar(10), exp_date date, pin int, acc_no int, foreign key(acc_no) references accounts(acc_no), cust_id int, foreign key(cust_id) references customers(cust_id), limit decimal(10,2))");
             stmt.executeUpdate("insert into customers values(1, 'X A')");
             stmt.executeUpdate("insert into customers values(2, 'Y B')");
-            stmt.executeUpdate("insert into accounts values(1, 100, 100000, 2)");
-            stmt.executeUpdate("insert into accounts values(2, 200, 50000, 1)");
-            stmt.executeUpdate("insert into cards values(123, 'Credit', '2023-02-12', 1122, 2, 1)");
-            stmt.executeUpdate("insert into cards values(111, 'Debit', '2022-07-23', 4312, 1, 2)");
+            stmt.executeUpdate("insert into accounts values(1, 10, 2)");
+            stmt.executeUpdate("insert into accounts values(2, 200, 1)");
+            stmt.executeUpdate("insert into cards values(123, 'Credit', '2023-02-12', 1122, 2, 1, 100000)");
+            stmt.executeUpdate("insert into cards values(111, 'Debit', '2022-07-23', 4312, 1, 2, 50000)");
             stmt.executeUpdate("insert into transactions values(1, 'Credit', 'Withdrawl', 200, 100, '2020-11-09 15:45:21', 1, 2)");
             stmt.executeUpdate("insert into transactions values(3, 'Debit', '3', 100, 50, '2020-10-11 12:35:20', 2, 1)");
             con2.close();

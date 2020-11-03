@@ -14,13 +14,14 @@ public class Card
 	private int acc_no = NULL;
 	private double limit;
 
-	public card(int card_no, int exp_date, int pin)
+	public card(int card_no, int exp_date, int pin, double limit)
 	{
 		//defining the cunstructor
 		this.setCard_no(card_no);
 		this.setExp_date(exp_date);
 		this.setCard_type(card_no);
 		this.setPin(pin);
+		this.limit=limit;
 	}
 
 	//returns card number
