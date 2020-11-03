@@ -1,3 +1,9 @@
+import java.sql.*;
+import java.util.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.time.LocalDate;
+
 public class Card
 {
 	private int card_no;
@@ -6,6 +12,7 @@ public class Card
 	private int pin;
 	private int cust_id = NULL;
 	private int acc_no = NULL;
+	private double limit;
 
 	public card(int card_no, int exp_date, int pin)
 	{
@@ -93,4 +100,3 @@ public class Card
 		
 	}
 }
-
