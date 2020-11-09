@@ -1,7 +1,10 @@
 import java.util.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.Statement;
+import java.sql.ResultSet;
 import java.time.LocalDate;
+import static java.lang.Math.abs;
 
 public class Main
 {
@@ -124,20 +127,20 @@ public class Main
 		switch(choice){
 
 		case 1 : 
-			changePIN(card_user, input);
+			changePIN(card_user.card_no);
 			break;
 
 		case 2 :
-			accobj.showBalance(card_user, input);
+			accobj.showAccBalance(card_user.acc_no);
 			break;
 
 		/*case 3 :
 			Main.performTransac(card_user, input);
 			break;*/
 
-		case 4 :
-			trobj.showTransacHistory(card_user, input);
-			break;
+		/*case 4 :
+			trobj.showTransacHistory(card_user);
+			break;*/
 
 		case 5 :
 			run=false;
@@ -153,7 +156,7 @@ public class Main
 	*/
 	public static void changePIN(int cardNo){
 		int oldPin=0, newPin=0;
-		Connection c = new Connection();
+		Connect c = new Connect();
 		Card card_user = new Card();
 		System.out.println("Enter old PIN :: ");
 		oldPin = input.nextInt();
@@ -172,7 +175,7 @@ public class Main
 
 			if(newPin==recheck_newPin){
 
-				updatePin(cardNo, newPin);
+				c.updatePin(cardNo, newPin);
 				System.out.println("PIN updated successfuly\n\n");
 			}
 			else

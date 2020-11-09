@@ -1,21 +1,24 @@
 import java.util.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import static java.lang.Math.abs;
 import java.time.LocalDate;
 
 public class Card
 {
 	static Scanner input = new Scanner( System.in );
-	private int card_no;
-	private Date exp_date;
-	private String card_type;
-	private int pin;
-	private int cust_id = NULL;
-	private int acc_no = NULL;
-	private double limit;
+	public int card_no;
+	public Date exp_date;
+	public String card_type;
+	public int pin;
+	public int cust_id;
+	public int acc_no;
+	public double limit;
 
-	public Card();
-	public Card(int card_no, int exp_date, int pin, double limit)
+	public Card(){}
+	public Card(int card_no, Date exp_date, int pin, double limit)
 	{
 		//defining the cunstructor
 		this.setCard_no(card_no);
@@ -36,12 +39,12 @@ public class Card
 	}
 
 	//returns card number
-	public int getExp_date(){
+	public Date getExp_date(){
 		return this.exp_date;
 	}
 
 	//set card number
-	public void setExp_date(int exp_date){
+	public void setExp_date(Date exp_date){
 		this.exp_date = exp_date;
 	}
 
@@ -78,8 +81,8 @@ public class Card
 	*/
 	public int checkValid(int cardNo){
 		//checks if the card is valid
-		Connection c=new Connection();
-		ArrayList<int>x=new ArrayList<int>();
+		Connect c=new Connect();
+		ArrayList<Integer>x=new ArrayList<Integer>();
 		c.getcardnos(x);
 		int f=-1;
 		for(int i=0;i<x.size();i++)
@@ -108,7 +111,7 @@ public class Card
 		returns false if pin is incorrect
 	*/
 	public boolean ValidPin(int cardNo, int pin_ent){
-		Connection c=new Connection();
+		Connect c=new Connect();
 		Card temp = new Card();
 		c.connectpk(cardNo, temp);
 		if(temp.pin==pin_ent)
@@ -123,7 +126,8 @@ public class Card
 	*/
 	public Card find_user(int cardNo){
 		Card temp = new Card();
-		connectpk(cardNo, temp);
+		Connect c = new Connect();
+		c.connectpk(cardNo, temp);
 		return temp;
 	}
 }

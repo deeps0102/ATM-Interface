@@ -1,6 +1,9 @@
 import java.util.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import static java.lang.Math.abs;
 import java.time.LocalDate;
  
 class Database {
@@ -12,15 +15,13 @@ class Database {
 
     public static void init()
     {
-        Connection con1 = null, con2 = null;
-        Statement stmt = null;
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con1 = DriverManager.getConnection(url1, user, password);
-            stmt=con1.createStatement();
+            Connection con1 = DriverManager.getConnection(url1, user, password);
+            Statement stmt=con1.createStatement();
             stmt.executeUpdate("create database atmifc");
             con1.close();
-            con2 = DriverManager.getConnection(url2, user, password);
+            Connection con2 = DriverManager.getConnection(url2, user, password);
             stmt=con2.createStatement();
             stmt.executeUpdate("use atmifc");
             stmt.executeUpdate("create table customers(cust_id int primary key, cust_name varchar(20), phn_no Bigint)");
