@@ -1,7 +1,7 @@
-import java.sql.*;
 import java.util.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.time.LocalDate;
  
 class Connection {
  
@@ -18,12 +18,12 @@ class Connection {
             Connection con = DriverManager.getConnection(url, user, password);
             Statement stmt=con.createStatement();
             String query="select * from customers where cust_id="+value;
-            System.out.println(query);
             ResultSet rs=stmt.executeQuery(query);
             while(rs.next())
             {
                 cusobj.customer_id=rs.getInt(1);
-                cusobj.c_name=rs.getString(2);
+                cusobj.cust_name=rs.getString(2);
+                cusobj.phn_no=rs.getInt(3);
             }
             con.close();
         }
@@ -38,7 +38,6 @@ class Connection {
             Connection con = DriverManager.getConnection(url, user, password);
             Statement stmt=con.createStatement();
             String query="select * from cards where card_no="+value;
-            System.out.println(query);
             ResultSet rs=stmt.executeQuery(query);
             while(rs.next())
             {
@@ -56,14 +55,13 @@ class Connection {
             e.printStackTrace();
         }
     }
-    public static void connectpk(int value, Customer accobj)
+    public static void connectpk(int value, Account accobj)
     {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection(url, user, password);
             Statement stmt=con.createStatement();
             String query="select * from customers where acc_no="+value;
-            System.out.println(query);
             ResultSet rs=stmt.executeQuery(query);
             while(rs.next())
             {
@@ -77,30 +75,69 @@ class Connection {
             e.printStackTrace();
         }
     }
-    public static void connectpk(int value, Customer trobj)
+    public static void connectpk(int value, ArrayList<Transaction> transacs)
     {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection(url, user, password);
             Statement stmt=con.createStatement();
-            String query="select * from customers where tr_id="+value;
-            System.out.println(query);
+            String query="select * from customers where transac_id="+value;
             ResultSet rs=stmt.executeQuery(query);
             while(rs.next())
             {
+                Transaction trobj = new Transaction();
                 trobj.transac_id=rs.getInt(1);
                 trobj.transac_via=rs.getString(2);
                 trobj.transac_type=rs.getString(3);
                 trobj.bal_bef=rs.Double(4);
                 trobj.bal_aft=rs.Double(5);
-                trobj.date_time=;
+                trobj.date_time=rs.Date(6);
                 trobj.acc_no=rs.getInt(7);
                 trobj.cust_id=rs.getInt(8);
+                transacs.add(trobj);
             }
+
             con.close();
         }
         catch(Exception e){
             e.printStackTrace();
         }
+    }
+    public static void getcardnos(ArrayList<Integer>cardnos)
+    {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection con = DriverManager.getConnection(url, user, password);
+        Statement stmt=con.createStatement();
+        String query="select card_no from cards";
+        ResultSet rs=stmt.executeQuery(query);
+        while(rs.next())
+        {
+            int temp=rs.getInt(1);
+            cardnos.add(temp);
+        }
+        con.close();
+    }
+    public static void updatePin(int cardno, int newpin)
+    {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection con = DriverManager.getConnection(url, user, password);
+        Statement stmt=con.createStatement();
+        String query="update cards set pin="+newpin+" where card_no="+cardno;
+        stmt.executeUpdate(query);
+        con.close();
+    }
+    public static void getcustids(ArrayList<Integer>custids)
+    {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection con = DriverManager.getConnection(url, user, password);
+        Statement stmt=con.createStatement();
+        String query="select cust_id from customers";
+        ResultSet rs=stmt.executeQuery(query);
+        while(rs.next())
+        {
+            int temp=rs.getInt(1);
+            custids.add(temp);
+        }
+        con.close();
     }
 }

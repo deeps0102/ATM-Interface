@@ -1,4 +1,3 @@
-import java.sql.*;
 import java.util.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,6 +10,7 @@ public class Account
 	private double acc_bal;
 	private int cust_id = NULL;
 
+	public Account();
 	public Account(int acc_no, String acc_type, double acc_bal)
 	{
 		//defining the constructor
@@ -49,9 +49,11 @@ public class Account
 		this.acc_bal = acc_bal;
 	}
 	
-	/*
-		returns account balance using account number
-	*/
+	//returns account balance using account number
 	public double showAccBalance(int AccNo){
-
+		Connection c = new Connection();
+		Account obj = new Account();
+		c.connectpk(AccNo, obj);
+		System.out.println("Your account balance is :: "+obj.acc_bal);
 	}
+}

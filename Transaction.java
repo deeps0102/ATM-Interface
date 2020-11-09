@@ -1,4 +1,3 @@
-import java.sql.*;
 import java.util.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,6 +6,7 @@ import java.time.LocalDate;
 public class Transaction
 {
 	private int transac_id;
+	private String transac_via;
 	private String transac_type;
 	private Date date_time;
 	private double bal_bef;
@@ -14,10 +14,12 @@ public class Transaction
 	private int cust_id = NULL;
 	private int acc_no = NULL;
 
+	public Transaction();
 	public Transaction(int transac_id, String transac_type, Date date_time, double bal_bef, double bal_aft)
 	{
 		//define the constructor
 		this.setTransac_id(transac_id);
+		this.setTransac_via(transac_via);
 		this.setTransac_type(transac_type);
 		this.setDate_time(date_time);
 		this.setBal_bef(bal_bef);
@@ -32,6 +34,16 @@ public class Transaction
 	//sets the id of the transaction
 	public void setTransac_id(transac_id){
 		this.transac_id = transac_id;
+	}
+
+	//returns medium via which transaction occured
+	public String getTransac_via(){
+		return this.transac_via;
+	}
+
+	//returns medium via which transaction occured
+	public String setTransac_via(transac_via){
+		this.transac_via = transac_via;
 	}
 
 	//returns type of the transaction
@@ -74,8 +86,25 @@ public class Transaction
 		this.bal_aft = bal_aft;
 	}
 	//show and prints transaction history with data from transactions table
-	public void show_transac_his()
+	public void show_transac_his(transac_id)
 	{
-		//
+		ArrayList<Transaction>x = new ArrayList<Transaction>();
+		Connection c=new Connection();
+		c.connectpk(transac_id, x);
+		for(int i=0;i<x.size();i++)
+		{
+			if(x.get(i).transac_type.equalsIgnoreCase("Withdrawl")==true)
+			{
+				System.out.println("Rs. "+abs(x.get(i).bal_bef-x.get(i).bal_aft)+" were withdrawn from the account with id "+x.get(i).acc_no+" via "+x.get(i).transac_via+" card on "+x.get(i).date_time.toString());
+			}
+			else if(x.get(i).transac_type.equalsIgnoreCase("Deposit")==true)
+			{
+				System.out.println("Rs. "+abs(x.get(i).bal_bef-x.get(i).bal_aft)+" were deposited into the account with id "+x.get(i).acc_no+" via "+x.get(i).transac_via+" card on "+x.get(i).date_time.toString());
+			}
+			else
+			{
+				System.out.println("Rs. "+abs(x.get(i).bal_bef-x.get(i).bal_aft)+" were transferred from account with id "+x.get(i).acc_no+" to account with id "+x.get(i).transac_type+" on "+x.get(i).date_time.toString());
+			}
+		}
 	}
-} 
+}
