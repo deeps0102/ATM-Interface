@@ -89,24 +89,24 @@ public class Transaction
 		this.bal_aft = bal_aft;
 	}
 	//show and prints transaction history with data from transactions table
-	public void show_transac_his(int transac_id)
+	public void show_transac_his(int cust_id)
 	{
 		ArrayList<Transaction>x = new ArrayList<Transaction>();
 		Connect c=new Connect();
-		c.connectpk(transac_id, x);
+		c.connectpk(cust_id, x);
 		for(int i=0;i<x.size();i++)
 		{
 			if(x.get(i).transac_type.equalsIgnoreCase("Withdrawl")==true)
 			{
-				System.out.println("Rs. "+abs(x.get(i).bal_bef-x.get(i).bal_aft)+" were withdrawn from the account with id "+x.get(i).acc_no+" via "+x.get(i).transac_via+" card on "+x.get(i).date_time.toString());
+				System.out.println("'Rs. "+abs(x.get(i).bal_bef-x.get(i).bal_aft)+" were withdrawn from the account with id "+x.get(i).acc_no+" via "+x.get(i).transac_via+" card on "+x.get(i).date_time.toString()+"'\n\n");
 			}
 			else if(x.get(i).transac_type.equalsIgnoreCase("Deposit")==true)
 			{
-				System.out.println("Rs. "+abs(x.get(i).bal_bef-x.get(i).bal_aft)+" were deposited into the account with id "+x.get(i).acc_no+" via "+x.get(i).transac_via+" card on "+x.get(i).date_time.toString());
+				System.out.println("'Rs. "+abs(x.get(i).bal_bef-x.get(i).bal_aft)+" were deposited into the account with id "+x.get(i).acc_no+" via "+x.get(i).transac_via+" card on "+x.get(i).date_time.toString()+"'\n\n");
 			}
 			else
 			{
-				System.out.println("Rs. "+abs(x.get(i).bal_bef-x.get(i).bal_aft)+" were transferred from account with id "+x.get(i).acc_no+" to account with id "+x.get(i).transac_type+" on "+x.get(i).date_time.toString());
+				System.out.println("'Rs. "+abs(x.get(i).bal_bef-x.get(i).bal_aft)+" were transferred from account with id "+x.get(i).acc_no+" to account with id "+x.get(i).transac_type+" on "+x.get(i).date_time.toString()+"'\n\n");
 			}
 		}
 	}

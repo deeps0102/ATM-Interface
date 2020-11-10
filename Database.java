@@ -27,7 +27,7 @@ class Database {
             stmt.executeUpdate("create table customers(cust_id int primary key, cust_name varchar(20), phn_no Bigint)");
             stmt.executeUpdate("create table accounts(acc_no int primary key, acc_bal decimal(10,2), cust_id int, foreign key(cust_id) references customers(cust_id))");
             stmt.executeUpdate("create table transactions(transac_id int primary key, transac_via varchar(10), transac_type varchar(10), bal_bef decimal(10,2), bal_aft decimal(10,2), date_time datetime, acc_no int, foreign key(acc_no) references accounts(acc_no), cust_id int, foreign key(cust_id) references customers(cust_id))");
-            stmt.executeUpdate("create table cards(card_no int primary key, card_type varchar(10), exp_date date, pin int, acc_no int, foreign key(acc_no) references accounts(acc_no), cust_id int, foreign key(cust_id) references customers(cust_id), limit decimal(10,2))");
+            stmt.executeUpdate("create table cards(card_no int primary key, card_type varchar(10), exp_date date, pin int, acc_no int, foreign key(acc_no) references accounts(acc_no), cust_id int, foreign key(cust_id) references customers(cust_id), lim decimal(10,2))");
             stmt.executeUpdate("insert into customers values(1, 'X A', 8320331881)");
             stmt.executeUpdate("insert into customers values(2, 'Y B', 8000531100)");
             stmt.executeUpdate("insert into accounts values(1, 10, 2)");

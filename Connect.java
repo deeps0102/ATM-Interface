@@ -64,7 +64,7 @@ class Connect {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection(url, user, password);
             Statement stmt=con.createStatement();
-            String query="select * from customers where acc_no="+value;
+            String query="select * from accounts where acc_no="+value;
             ResultSet rs=stmt.executeQuery(query);
             while(rs.next())
             {
@@ -84,7 +84,7 @@ class Connect {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection(url, user, password);
             Statement stmt=con.createStatement();
-            String query="select * from customers where transac_id="+value;
+            String query="select * from transactions where cust_id="+value;
             ResultSet rs=stmt.executeQuery(query);
             while(rs.next())
             {
@@ -157,5 +157,24 @@ class Connect {
         catch(Exception e){
             e.printStackTrace();
         }
+    }
+    public static String getname(int cust_id)
+    {
+        String name=new String();
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection(url, user, password);
+            Statement stmt=con.createStatement();
+            String query = "select cust_name from customers where cust_id="+cust_id;
+            ResultSet rs = stmt.executeQuery(query);
+            while(rs.next())
+            {
+                name=rs.getString(1);
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return name;
     }
 }
