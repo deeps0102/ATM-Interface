@@ -177,12 +177,12 @@ public class Main
 
 		case 1 : 
 			changePIN(card_user.card_no);
-			CustomerMenu(card_user);
+			run=CustomerMenu(card_user);
 			break;
 
 		case 2 :
 			accobj.showAccBalance(card_user.acc_no);
-			CustomerMenu(card_user);
+			run=CustomerMenu(card_user);
 			break;
 
 		/*case 3 :
@@ -192,14 +192,15 @@ public class Main
 
 		case 4 :
 			trobj.show_transac_his(card_user.cust_id);
-			CustomerMenu(card_user);
+			run=CustomerMenu(card_user);
 			break;
 
 		case 5 :
+			run=false;
 			break;
 
 		default:
-			CustomerMenu(card_user);
+			run=CustomerMenu(card_user);
 		}
 		if(choice==5) run=false;
 		return run;

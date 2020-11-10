@@ -98,11 +98,11 @@ public class Transaction
 		{
 			if(x.get(i).transac_type.equalsIgnoreCase("Withdrawl")==true)
 			{
-				System.out.println("'Rs. "+abs(x.get(i).bal_bef-x.get(i).bal_aft)+" were withdrawn from the account with id "+x.get(i).acc_no+" via "+x.get(i).transac_via+" card on "+x.get(i).date_time.toString()+"'\n\n");
+				System.out.println("'Rs. "+abs(x.get(i).bal_bef-x.get(i).bal_aft)+" were withdrawn from the account via "+x.get(i).transac_via+" card on "+x.get(i).date_time.toString()+"'\n\n");
 			}
 			else if(x.get(i).transac_type.equalsIgnoreCase("Deposit")==true)
 			{
-				System.out.println("'Rs. "+abs(x.get(i).bal_bef-x.get(i).bal_aft)+" were deposited into the account with id "+x.get(i).acc_no+" via "+x.get(i).transac_via+" card on "+x.get(i).date_time.toString()+"'\n\n");
+				System.out.println("'Rs. "+abs(x.get(i).bal_bef-x.get(i).bal_aft)+" were deposited into the account via "+x.get(i).transac_via+" card on "+x.get(i).date_time.toString()+"'\n\n");
 			}
 			else
 			{
