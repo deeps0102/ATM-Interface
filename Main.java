@@ -101,7 +101,7 @@ public class Main
 						int check_cardNo = card_user.checkValid(cardNo);
 						if(check_cardNo==1){
 							//taking input of correct PIN
-							System.out.print("\nEnter PIN :: ");
+							System.out.print("\nEnter the PIN :: ");
 							pin = input.nextInt();
 							if(pin==-1)
 							{
@@ -186,8 +186,8 @@ public class Main
 			break;
 
 		/*case 3 :
-			Main.performTransac(card_user, input);
-			CustomerMenu(card_user);
+			performTransac(card_user, input);
+			run=CustomerMenu(card_user);
 			break;*/
 
 		case 4 :

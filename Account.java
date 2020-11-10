@@ -57,6 +57,6 @@ public class Account
 		Connect c = new Connect();
 		Account obj = new Account();
 		c.connectpk(AccNo, obj);
-		System.out.println("Your account balance is :: "+obj.acc_bal);
+		System.out.println("Your account balance is Rs. "+obj.acc_bal);
 	}
 }

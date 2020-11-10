@@ -98,16 +98,17 @@ public class Transaction
 		{
 			if(x.get(i).transac_type.equalsIgnoreCase("Withdrawl")==true)
 			{
-				System.out.println("'Rs. "+abs(x.get(i).bal_bef-x.get(i).bal_aft)+" were withdrawn from the account via "+x.get(i).transac_via+" card on "+x.get(i).date_time.toString()+"'\n\n");
+				System.out.println("'Rs. "+abs(x.get(i).bal_bef-x.get(i).bal_aft)+" were withdrawn from the account via "+x.get(i).transac_via+" card on "+x.get(i).date_time.toString()+"'\n");
 			}
 			else if(x.get(i).transac_type.equalsIgnoreCase("Deposit")==true)
 			{
-				System.out.println("'Rs. "+abs(x.get(i).bal_bef-x.get(i).bal_aft)+" were deposited into the account via "+x.get(i).transac_via+" card on "+x.get(i).date_time.toString()+"'\n\n");
+				System.out.println("'Rs. "+abs(x.get(i).bal_bef-x.get(i).bal_aft)+" were deposited into the account via "+x.get(i).transac_via+" card on "+x.get(i).date_time.toString()+"'\n");
 			}
 			else
 			{
-				System.out.println("'Rs. "+abs(x.get(i).bal_bef-x.get(i).bal_aft)+" were transferred from account with id "+x.get(i).acc_no+" to account with id "+x.get(i).transac_type+" on "+x.get(i).date_time.toString()+"'\n\n");
+				System.out.println("'Rs. "+abs(x.get(i).bal_bef-x.get(i).bal_aft)+" were transferred from account with id "+x.get(i).acc_no+" to account with id "+x.get(i).transac_type+" on "+x.get(i).date_time.toString()+"'\n");
 			}
 		}
+		System.out.print("\n");
 	}
 }
