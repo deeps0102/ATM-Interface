@@ -1,12 +1,14 @@
-import java.sql.*;
 import java.util.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import static java.lang.Math.abs;
 import java.time.LocalDate;
 
-public class trans_cre
+public class Trans_cre extends Transaction
 {
-	public trans_cre()
+	public Trans_cre()
 	{
 		//define the constructor
 	}

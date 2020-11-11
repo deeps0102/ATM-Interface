@@ -1,20 +1,24 @@
-import java.sql.*;
 import java.util.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import static java.lang.Math.abs;
 import java.time.LocalDate;
 
 public class Card
 {
-	private int card_no;
-	private int exp_date;
-	private String card_type;
-	private int pin;
-	private int cust_id = NULL;
-	private int acc_no = NULL;
-	private double limit;
+	static Scanner input = new Scanner( System.in );
+	public int card_no;
+	public Date exp_date;
+	public String card_type;
+	public int pin;
+	public int cust_id;
+	public int acc_no;
+	public double limit;
 
-	public card(int card_no, int exp_date, int pin, double limit)
+	public Card(){}
+	public Card(int card_no, Date exp_date, int pin, double limit)
 	{
 		//defining the cunstructor
 		this.setCard_no(card_no);
@@ -35,12 +39,12 @@ public class Card
 	}
 
 	//returns card number
-	public int getExp_date(){
+	public Date getExp_date(){
 		return this.exp_date;
 	}
 
 	//set card number
-	public void setExp_date(int exp_date){
+	public void setExp_date(Date exp_date){
 		this.exp_date = exp_date;
 	}
 
@@ -75,29 +79,55 @@ public class Card
 	  	returns -1 if not valid
 	 	returns 0 if expired
 	*/
-	public int chackValid(int cardNo){
+	public int checkValid(int cardNo){
 		//checks if the card is valid
+		Connect c=new Connect();
+		ArrayList<Integer>x=new ArrayList<Integer>();
+		c.getcardnos(x);
+		int f=-1;
+		for(int i=0;i<x.size();i++)
+		{
+			if(x.get(i)==cardNo)
+			{
+				f=0;
+				break;
+			}
+		}
+		if(f==0)
+		{
+			Card obj = new Card();
+			c.connectpk(cardNo, obj);
+			Date date = new Date();
+			if(obj.exp_date.compareTo(date)>0)
+			{
+				f=1;
+			}
+		}
+		return f;
 	}
 
 	/*	checks if pin is correct or not
 		returns true if pin is correct
 		returns false if pin is incorrect
 	*/
-	public boolean ValidPin(int cardNo, int pin){
-
+	public boolean ValidPin(int cardNo, int pin_ent){
+		Connect c=new Connect();
+		Card temp = new Card();
+		c.connectpk(cardNo, temp);
+		if(temp.pin==pin_ent)
+		{
+			return true;
+		}
+		return false;
 	}
 
 	/* 
 		returns the card information associated with provided card number and pin
 	*/
-	public Card find_user(int cardNo, int pin){
-
-	}
-
-	/*
-		upadates the PIN of user
-	*/
-	public void updatePin(int cardNo, int newPin){
-		
+	public Card find_user(int cardNo){
+		Card temp = new Card();
+		Connect c = new Connect();
+		c.connectpk(cardNo, temp);
+		return temp;
 	}
 }

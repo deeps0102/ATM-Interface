@@ -1,203 +1,247 @@
-import java.sql.*;
 import java.util.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.Statement;
+import java.sql.ResultSet;
 import java.time.LocalDate;
+import static java.lang.Math.abs;
 
 public class Main
 {
+	//init scanner
+	static Scanner input = new Scanner( System.in );
 	public static void main(String args[])
 	{
-		// init Scanner
-		Scanner input = new Scanner(System.in);
+		Database obj = new Database();
+		Card card_user = new Card();
 
-		Customer user;
-		Card card_user;
-		Account account_user;
+		//creating database
+		obj.init();
 
 		boolean run = true;
-
+		System.out.println("\n                                  WELCOME TO ROYALTY BANK");
+		System.out.println("\n                         (At any moment to exit enter -1 as input)\n\n");
 		while(run){
 
-			/*
-				calling login prompt and cannot proceed untill successfull login
-			*/
-			card_user = Main.mainMenuPrompt(input);
-			/*
-				stay in main menu until customer quits
-			*/
-			Main.printCustomerMenu(card_user, input);
+			//calling login prompt and cannot proceed untill successfull login
+			card_user=mainMenuPrompt();
+
+			//stay in main menu until customer quits
+			if(card_user.card_no==-1)
+			{
+				run=false;
+			}
+			else
+			{
+				run=CustomerMenu(card_user);
+			}
+
 		}
+
+		//droping database
+		obj.drop();
 	}
 
 	/*
 		prints ATM login menu
 	*/
-	public static Card mainMenuPrompt(Scanner input){
+	public static Card mainMenuPrompt(){
 		
 		//inits
-		int userID;
-		int cardNo;
-		int pin;
-		Card registered_card_user;
+		int userID=0, cardNo=0, pin=0;
+		String dummy="";
+		Connect c = new Connect();
+		Customer user = new Customer();
+		Card card_user = new Card();
+		Card registered_card_user = new Card();
+		boolean check_pin=false;
 
 		// asks user for ID, card number and pin until gets an registered user
-		while(registered_card_user == NULL){
-			System.out.printf("\nWelcome to the Royalty Bank\n\n");
-
+		while(!check_pin){
 			//taking input of registered customer ID 
-			System.out.print("Enter the Registered CUSTOMER ID :: ");
+			System.out.print("Enter the Registered USER ID :: ");
 			userID = input.nextInt();
-
-			//checking if userID exists
-			boolean check_user = user.check_if_registered(userID);
-			if(check_user){
-
-				//taking input of valid card number
-				System.out.print("\nEnter the CARD NUMBER :: ");
-				cardNo = input.nextInt();
-
-				//checking if card number exists
-				int check_cardNo = card_user.checkValid(cardNo);
-				if(check_cardNo==1){
-
-					//taking input of correct PIN
-					System.out.print("\nEnter PIN :: ");
-					pin = input.nextInt();
-
-					//checking if PIN is correct
-					boolean check_pin = card_user.ValidPin(cardNo, pin);
-					if(check_pin){
-
-						// finding customer corresponding to provided ID, card number, and PIN 
-						registered_card_user = card_user.find_user(cardNo, pin);
-					}
-					else
-						System.out.printf("\n\nIncorrect PIN\nPlease try again\n\n");
+			if(userID==-1)
+			{
+				dummy = input.nextLine();
+				System.out.print("\n\nAre you sure you want to exit(Y/N)? :: ");
+				String s = input.nextLine();
+				System.out.print("\n\n");
+				if(s.equalsIgnoreCase("Y"))
+				{
+					registered_card_user.card_no=-1;
+					return registered_card_user;
 				}
-				else if(check_cardNo==0)
-					System.out.printf("\n\nThe provided card is already expired\n\n");
-				else if(check_cardNo==-1)
-					System.out.printf("\n\nNo such card exists\n\n");
 			}
 			else
-				System.out.printf("\n\nNo customer is registered with the provided ID\nEnter a valid Customer ID\n\n");
+			{
+				//checking if userID exists
+				boolean check_user = user.check_if_registered(userID);
+				if(check_user==true){
+					String name = c.getname(userID);
+					System.out.println("\nWELCOME "+name+"!");
+					//taking input of valid card number
+					System.out.print("\nEnter the CARD NUMBER :: ");
+					cardNo = input.nextInt();
+					if(cardNo==-1)
+					{
+						dummy = input.nextLine();
+						System.out.print("\nAre you sure you want to exit(Y/N)? :: ");
+						String s = input.nextLine();
+						System.out.print("\n\n");
+						if(s.equalsIgnoreCase("Y"))
+						{
+							registered_card_user.card_no=-1;
+							return registered_card_user;
+						}
+					}
+					else
+					{
+						//checking if card number exists
+						int check_cardNo = card_user.checkValid(cardNo);
+						if(check_cardNo==1){
+							//taking input of correct PIN
+							System.out.print("\nEnter the PIN :: ");
+							pin = input.nextInt();
+							if(pin==-1)
+							{
+								dummy = input.nextLine();
+								System.out.print("\n\nAre you sure you want to exit(Y/N)? :: ");
+								String s = input.nextLine();
+								System.out.print("\n\n");
+								if(s.equalsIgnoreCase("Y"))
+								{
+									registered_card_user.card_no=-1;
+									return registered_card_user;
+								}
+							}
+							else
+							{
+								//checking if PIN is correct
+								check_pin = card_user.ValidPin(cardNo, pin);
+								if(check_pin){
+
+									// finding customer corresponding to provided ID, card number, and PIN 
+									registered_card_user = card_user.find_user(cardNo);
+								}
+								else
+									System.out.printf("\n\nIncorrect PIN\nPlease try again\n\n");
+							}
+						}
+						else if(check_cardNo==0)
+							System.out.printf("\n\nThe provided card is already expired\n\n");
+						else if(check_cardNo==-1)
+							System.out.printf("\n\nEnter valid card number\n\n");
+					}
+				}
+				else
+				{
+					System.out.printf("\nUser not registered\nEnter a Registered User ID...\n\n\n");
+
+				}
+			}
 		}
 
 		return registered_card_user;
-
 	}
 
 	/*
 		prints ATM menu for customer actions
 	*/
-	public static void printCustomerMenu(Card card_user, Scanner input){
-		
-		//init
-		int choice;
+	public static boolean CustomerMenu(Card card_user){
+		Account accobj = new Account();
+		Transaction trobj = new Transaction();
+		int choice=0;
+		boolean run=true;
 
 		//user menu
 		while(choice < 1 || choice > 5){
 
-			System.out.println("What would you like to do?\n\n");
+			System.out.println("\nWhat would you like to do?\n");
 			System.out.println(" 1 - CHANGE PIN");
 			System.out.println(" 2 - SWOW ACCOUNT BALANCE");
 			System.out.println(" 3 - PERFORM TRANSACTION");
 			System.out.println(" 4 - SHOW ACCOUNT TRANSACTION HISTORY");
 			System.out.println(" 5 - QUIT\n\n");
-			System.out.println("ENTER CHOICE :: ");
+			System.out.print("ENTER CHOICE :: ");
 			choice = input.nextInt();
 
+			System.out.print("\n");
 			if(choice < 1 || choice > 5)
-				System.out.println("Invalid choice.\nPlease try again\n");
+				System.out.println("\nInvalid choice.\nPlease try again\n");
 		}
 
 		//processing the choice
 
 		switch(choice){
 
-
 		case 1 : 
-				Main.changePIN(card_user, input);
-				break;
+			changePIN(card_user.card_no);
+			run=CustomerMenu(card_user);
+			break;
 
 		case 2 :
-				Main.showBalance(card_user, input);
-				break;
+			accobj.showAccBalance(card_user.acc_no);
+			run=CustomerMenu(card_user);
+			break;
 
-		case 3 :
-				Main.performTransac(card_user, input);
-				break;
+		/*case 3 :
+			performTransac(card_user, input);
+			run=CustomerMenu(card_user);
+			break;*/
 
 		case 4 :
-				Main.showTransacHistory(card_user, input);
-				break;
+			trobj.show_transac_his(card_user.cust_id);
+			run=CustomerMenu(card_user);
+			break;
 
 		case 5 :
-				input.nextLine();
-				break;
-		}
+			run=false;
+			break;
 
-		//redisplay this menu unless the user wants to quit
-		if(choice!=5)
-			Main.printCustomerMenu(card_user, input);
+		default:
+			run=CustomerMenu(card_user);
+		}
+		if(choice==5) run=false;
+		return run;
 	}
 
 	/*
 		changes the pin of a customer
 	*/
-	public static void changePIN(Card card_user, Scanner input){
-		int oldPin;
-		int newPin;
-
+	public static void changePIN(int cardNo){
+		int oldPin=0, newPin=0;
+		Connect c = new Connect();
+		Card card_user = new Card();
 		System.out.print("Enter old PIN :: ");
 		oldPin = input.nextInt();
 
 		// verifying the pin
-		boolean check_pin = card_user.ValidPin(card_user.card_no, oldPin);
-		if(check_pin){
+		boolean check_pin = card_user.ValidPin(cardNo, oldPin);
+		if(check_pin==true){
 
 			//entering new PIN
 			System.out.print("Enter new PIN :: ");
 			newPin = input.nextInt();
 
-			int recheck_newPin;
+			int recheck_newPin=0;
 			System.out.print("Again enter new PIN :: ");
 			recheck_newPin = input.nextInt();
 
 			if(newPin==recheck_newPin){
 
-				updatePin(card_user.card_no, newPin);
-				System.out.print("PIN updated successfuly\n\n");
+				c.updatePin(cardNo, newPin);
+				System.out.println("\nPIN updated successfuly\n\n");
 			}
 			else
-				System.out.print("Re-entered New PIN doesn't match\nPlease Try Again\n\n");
+				System.out.println("\nRe-entered New PIN doesn't match\nPlease Try Again\n\n");
 	
 		}
 		else
-			System.out.printf("\n\nIncorrect PIN\nPlease try again\n\n");
-	}
-
-	/*
-		display balance of customer account
-	*/
-	public static void showBalance(Card card_user, Scanner input){
-
-		double balance;
-		balance = account_user.showAccBalance(card_user.AccNo);
-
-		System.out.println("Your Account Balance is :: " + balance + "\n\n");
-
-	}
-
-	/*
-		displays tranaction history of an account
-	*/
-	public static void showTransacHistory(Card card_user, Scanner input){
-
+			System.out.println("\n\nIncorrect PIN\nPlease try again\n\n");
 	}	
 
-	public static void performTransac(Card card_user, Scanner input){
+	/*public static void performTransac(Card card_user){
 		//it processes the fund withdraw from an account
-	}
+	}*/
 }

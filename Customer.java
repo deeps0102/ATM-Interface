@@ -1,15 +1,18 @@
-import java.sql.*;
 import java.util.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.Statement;
+import java.sql.ResultSet;
 import java.time.LocalDate;
+import static java.lang.Math.abs;
 
 public class Customer
 {
-	private int cust_id;
-	private String cust_name;
-	private int phn_no; 
+	public int cust_id;
+	public String cust_name;
+	public int phn_no; 
 
+	public Customer(){}
 	public Customer(int cust_id, String cust_name, int phn_no)
 	{
 		//defining the constructor
@@ -51,7 +54,19 @@ public class Customer
 	/*
 		checks if customer is registered or not
 	*/
-	public boolean check_if_registered( int userID){
-		;
+	public boolean check_if_registered(int custID){
+		ArrayList<Integer>a = new ArrayList<Integer>();
+		Connect c = new Connect();
+		c.getcustids(a);
+		boolean f=false;
+		for(int i=0;i<a.size();i++)
+		{
+			if(a.get(i)==custID)
+			{
+				f=true;
+				break;
+			}
+		}
+		return f;
 	}
 }

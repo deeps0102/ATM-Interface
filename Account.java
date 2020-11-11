@@ -1,16 +1,19 @@
-import java.sql.*;
 import java.util.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.Statement;
+import java.sql.ResultSet;
 import java.time.LocalDate;
+import static java.lang.Math.abs;
 
 public class Account
 {
-	private int acc_no;
-	private String acc_type;
-	private double acc_bal;
-	private int cust_id = NULL;
+	public int acc_no;
+	public String acc_type;
+	public double acc_bal;
+	public int cust_id;
 
+	public Account(){}
 	public Account(int acc_no, String acc_type, double acc_bal)
 	{
 		//defining the constructor
@@ -49,9 +52,11 @@ public class Account
 		this.acc_bal = acc_bal;
 	}
 	
-	/*
-		returns account balance using account number
-	*/
-	public double showAccBalance(int AccNo){
-
+	//returns account balance using account number
+	public void showAccBalance(int AccNo){
+		Connect c = new Connect();
+		Account obj = new Account();
+		c.connectpk(AccNo, obj);
+		System.out.println("Your account balance is Rs. "+obj.acc_bal);
 	}
+}
