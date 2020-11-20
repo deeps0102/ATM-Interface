@@ -69,9 +69,9 @@ public class Card
 		while(temp>=10)
 			temp /= 10;
 		if(temp==1)
-			this.card_type = "debit card";
+			this.card_type = "Debit";
 		else
-			this.card_type = "credit card";
+			this.card_type = "Credit";
 	}
 
 	/*	checks if card is valid or not

@@ -111,4 +111,18 @@ public class Transaction
 		}
 		System.out.print("\n");
 	}
+
+	public void performTransac(Card obj)
+	{
+		Trans_cre tcobj = new Trans_cre();
+		Trans_deb tbobj = new Trans_deb();
+		if(obj.card_type.equals("Debit"))
+		{
+			tbobj.transac_list();
+		}
+		else if(obj.card_type.equals("Credit"))
+		{
+			tcobj.transac_list();
+		}
+	}
 }

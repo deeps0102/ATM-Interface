@@ -150,7 +150,8 @@ public class Main
 	*/
 	public static boolean CustomerMenu(Card card_user){
 		Account accobj = new Account();
-		Transaction trobj = new Transaction();
+		Transaction trobj1 = new Transaction();
+		Transaction trobj2 = new Transaction();
 		int choice=0;
 		boolean run=true;
 
@@ -168,7 +169,7 @@ public class Main
 
 			System.out.print("\n");
 			if(choice < 1 || choice > 5)
-				System.out.println("\nInvalid choice.\nPlease try again\n");
+				System.out.println("\nEnter a valid choice\n");
 		}
 
 		//processing the choice
@@ -185,13 +186,13 @@ public class Main
 			run=CustomerMenu(card_user);
 			break;
 
-		/*case 3 :
-			performTransac(card_user, input);
+		case 3 :
+			trobj1.performTransac(card_user);
 			run=CustomerMenu(card_user);
-			break;*/
+			break;
 
 		case 4 :
-			trobj.show_transac_his(card_user.cust_id);
+			trobj2.show_transac_his(card_user.cust_id);
 			run=CustomerMenu(card_user);
 			break;
 
