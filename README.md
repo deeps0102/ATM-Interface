@@ -30,6 +30,11 @@
     4. Show Account Transaction History
     5. Quit
     
+    By choosing the above options, user can change his card PIN,
+    see his account history, perform transactions such as deposit, withdrawl,
+    transfer of money and can also see his transactions history. He can quit
+    the program at any moment.
+    
 ### Run the Project
 
   1. In base/Connect.java and base/Database.java replace with following
